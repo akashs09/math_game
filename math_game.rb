@@ -26,8 +26,8 @@ def answer_correct?(question, player_answer)
 end
 
 # pass player turn and update score by -1
-def update_score(turn)
-  @score[turn - 1] -= 1
+def update_score(player_turn)
+  @score[player_turn - 1] -= 1
 end
 # pass a question array and print to screen
 def ui_ask_question(question)
@@ -63,9 +63,10 @@ def main
     turn = player_turn
     question = generate_question
     ui_ask_question(question)
-    answer = ui_player_input(turn)
-    ui_print_result(answer_correct?(question, answer))
-    if !answer_correct?(question, answer)
+    player_answer = ui_player_input(turn)
+    result = answer_correct?(question, player_answer)
+    ui_print_result(result)
+    unless result
       update_score(turn)
       ui_print_score
     end
