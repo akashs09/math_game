@@ -10,7 +10,7 @@ class Interface
 
   def user_input(player)
     print "Enter your answer: "
-    player.answer = gets.chomp
+    player.answer = gets.chomp.to_i
   end
 
   def output_result(result)
@@ -22,6 +22,7 @@ class Interface
   end
 
   def end_game_message(player)
+    "Game Over"
     "Player #{player.id} has won the game."
   end
 
@@ -29,8 +30,16 @@ end
 
 class Game_Mechanics
 
-  def check_answer(question, answer)
-    question == answer
+  def check_answer(question, player)
+    question.answer == player.answer
+  end
+
+  def right_answer(player)
+    player.plus_one_point
+  end
+
+  def wrong_answer(player)
+    player.lose_life
   end
 
   # def question
@@ -42,16 +51,31 @@ end
 
 player1 = Player.new(1)
 player2 = Player.new(2)
-question = Question.new
 interface = Interface.new
 game = Game_Mechanics.new
+question = Question.new
 
 
+question.generate
+puts question.num_a
+puts question.num_b
+puts question.answer
 
+question.generate
+puts question.num_a
+puts question.num_b
+puts question.answer
+loop
+current_player = player1
+
+interface.output_points(player1)
 interface.ask_question(player1, question)
 interface.user_input(player1)
-game.check_answer(question, player1.answer)
-
+result = game.check_answer(question, player1)
+interface.output_result(result)
+result ? game.right_answer(player1) : game.wrong_answer(player1)
+interface.output_points(player1)
+end loop
 
 
 # game = Game.new
@@ -71,11 +95,6 @@ game.check_answer(question, player1.answer)
 # # using running total of questions to determine and return player turn
 # def player_turn
 #     (@question_count % 2) + 1
-# end
-
-# # pass question array and player answer return true if correct
-# def answer_correct?(question, player_answer)
-#   player_answer == question[2]
 # end
 
 # # print current score
