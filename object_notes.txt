@@ -1,0 +1,25 @@
+OOOOOOOOP
+
+
+Classes
+
+Player
+  name
+  score
+  lives
+  turn
+  answer
+
+
+Questions
+  num_a
+  num_b
+  total
+
+UI
+  ask question
+  get input
+  output result
+  output end game
+
+Game

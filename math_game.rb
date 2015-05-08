@@ -11,7 +11,7 @@ def random_number
   rand(1..20)
 end
 
-# genrate 2 random numbers and determine total. return array with three values
+# generate 2 random numbers and determine total. return array with three values
 def generate_question
   @question_count += 1
   num_a = random_number
@@ -29,6 +29,7 @@ end
 def update_score(player_turn)
   @score[player_turn - 1] -= 1
 end
+
 # pass a question array and print to screen
 def ui_ask_question(question)
   puts "#{question[0]} \+ #{question[1]}"
@@ -50,6 +51,7 @@ def ui_print_score
   puts "Player 1 has #{@score[0]} lives. Player 2 has #{@score[1]} lives."
 end
 
+# print game over message with winner
 def ui_print_end_game(score)
   puts "Game is over."
   loser = score.index(0) + 1
