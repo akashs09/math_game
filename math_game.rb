@@ -1,4 +1,5 @@
 @question_count = 0
+@score = [3,3]
 
 # using running total of questions to determine and return player turn
 def player_turn
@@ -12,12 +13,22 @@ end
 
 # genrate 2 random numbers and determine total. return array with three values
 def generate_question
+  @question_count += 1
   num_a = random_number
   num_b = random_number
   total = num_a + num_b
   array = [num_a, num_b, total]
 end
 
+# pass question array and player answer return true if correct
+def answer_correct?(question, player_answer)
+  player_answer == question[2]
+end
+
+# pass player turn and update score by -1
+def update_score(turn)
+  @score[turn - 1] -= 1
+end
 # pass a question array and print to screen
 def ui_ask_question(question)
   puts "#{question[0]} \+ #{question[1]}"
@@ -26,37 +37,44 @@ end
 # pass player turn and print to screen
 def ui_player_input(player)
   print "Player #{player}. answer? "
-  gets.chomp
+  gets.chomp.to_i
 end
 
-# pass question array and player answer return true if correct
-def answer_correct?(question, player_answer)
-  player_answer == question[2]
+# pass boolean result of answer right or wrong and print correct or incorrect
+def ui_print_result(result)
+  puts result ? 'Correct!' : 'Incorrect =('
 end
 
+# print current score
+def ui_print_score
+  puts "Player 1 has #{@score[0]} lives. Player 2 has #{@score[1]} lives."
+end
 
-# def update_score(score)
+def ui_print_end_game(score)
+  puts "Game is over."
+  loser = score.index(0)
+  if loser == 0
+    winner = 2
+  else
+    winner = 1
+  end
+  puts "Player #{winner} has won the game."
+end
 
-# end
+# main program
+def main
+  until @score.include?(0)
+    turn = player_turn
+    question = generate_question
+    ui_ask_question(question)
+    answer = ui_player_input(turn)
+    ui_print_result(answer_correct?(question, answer))
+    if !answer_correct?(question, answer)
+      update_score(turn)
+      ui_print_score
+    end
+  end
+  ui_print_end_game(@score)
+end
 
-# def main
-#   # initialize
-#   score =[0,0]
-
-#   5.times do | x |
-#     question = generate_question
-#     player = 1 + @question_count % 2
-#     @question_count += 1
-#     ui_ask_question(question)
-#     answer = ui_player_input(player).to_i
-#     if answer_correct?(question, answer)
-#       puts 'YAY!!'
-#       score[1] += 1
-#     else
-#       puts 'you suck'
-#     end
-
-#   end
-# end
-
-# main
+main

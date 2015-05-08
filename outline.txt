@@ -1,22 +1,15 @@
 loop until (player1 or player2) score = 0
 
-  player1 turn
-    generate question
-    print question
-    get answer
-    assess correctness
-    if incorrect
-      score -1
-      output scores
-
-  player2 turn
-    generate question
-    print question
-    get answer
-    assess correctness
-    if incorrect
-      score -1
-      output scores
+  determine turn  # turn_indicator
+  generate question 
+    generate random number  
+  print question
+  get answer
+  assess correctness
+  if incorrect
+    score -1      # turn_indicator, scores
+    output scores
+  change turn 
 
 end loop
 
@@ -28,3 +21,4 @@ question
 user input
 scores
   player1, player2
+turn_indicator
