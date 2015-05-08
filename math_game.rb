@@ -1,5 +1,5 @@
-def player_input
-  print 'answer? '
+def player_input(player)
+  print "Player #{player}. answer? "
   gets.chomp
 end
 
@@ -22,20 +22,29 @@ def answer_correct?(question, answer)
   answer == question[2]
 end
 
+def update_score(score)
+
+end
 
 def main
-  question = generate_question
-  ask_question(question)
-  answer = player_input.to_i
-  if answer_correct?(question, answer)
-    puts 'YAY!!'
-  else
-    puts 'you suck'
+  # initialize
+  score =[0,0]
+  @question_count = 0
+
+  5.times do | x |
+    question = generate_question
+    player = 1 + question_count % 2
+    question_count += 1
+    ask_question(question)
+    answer = player_input(player).to_i
+    if answer_correct?(question, answer)
+      puts 'YAY!!'
+      score[1] += 1
+    else
+      puts 'you suck'
+    end
+
   end
-
-  player_one = 0
-  player_two = 0
-
 end
 
 main
