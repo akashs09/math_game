@@ -52,12 +52,8 @@ end
 
 def ui_print_end_game(score)
   puts "Game is over."
-  loser = score.index(0)
-  if loser == 0
-    winner = 2
-  else
-    winner = 1
-  end
+  loser = score.index(0) + 1
+  loser == 1 ? winner = 2 : winner = 1
   puts "Player #{winner} has won the game."
 end
 
